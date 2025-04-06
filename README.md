@@ -26,19 +26,28 @@ RydeSync ATS is an enterprise-grade Applicant Tracking System designed to help t
 
 
 ##  API Endpoints
-**Auth
+**Authentication
 Method	Endpoint	Description
 POST	/api/auth/register	Register new user
 POST	/api/auth/login	User login
 GET	/api/auth/me	Get logged-in user
 
-**Jobs
+** User Management
+
+**Job Management
 Method	Endpoint	Description
 POST	/api/jobs	Create a new job
 GET	/api/jobs	Get all jobs
 GET	/api/jobs/:id	Get single job
 PATCH	/api/jobs/:id	Update job
 DELETE	/api/jobs/:id	Delete job
+
+
+
+**Candidate Tracking Management (candidate routes with Multer for resume upload)
+**Resume Parsing Management
+
+
 
 
 Phase 2:

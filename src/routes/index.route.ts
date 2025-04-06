@@ -1,5 +1,5 @@
 import express from "express";
-// import authRouter from "./auth.route";
+import authRouter from "./auth.route";
 // import refreshRouter from "./refreshToken.route";
 // import userRouter from "./user.route";
 // import productRoutes from "./routes/products";
@@ -7,13 +7,13 @@ import express from "express";
 const rootRouter = express.Router();
 
 //Health Check
-rootRouter.get("/api/v1/health", (req, res) => {
+rootRouter.get("/health", (req, res) => {
   res.send("API Health Check is running...");
   console.log("API Health Check is running...");
 });
 
 //authentication routes
-// rootRouter.use(authRouter);
+rootRouter.use('/auth',authRouter);
 
 //refresh token routes
 // rootRouter.use(refreshRouter);
