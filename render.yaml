@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: ApplicantTrackingSystem
+    runtime: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: ACCESS_TOKEN_SECRET
+        value: 1234567890@qwertyuiopasdfghjklzxcvbnm
+      - key: MONGO_URI
+        value: mongodb+srv://william:admin@cluster0.0phyakj.mongodb.net/ApplicantTrackingSystem
