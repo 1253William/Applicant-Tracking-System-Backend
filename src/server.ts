@@ -6,6 +6,8 @@ import cookieParser from 'cookie-parser';
 import rootRouter from './routes/index.route';
 import connectDB from './config/db';
 import morgan from 'morgan';
+import swaggerUi from "swagger-ui-express";
+import swaggerSpec from "./config/swagger";
 
 // Connect to MongoDB
 connectDB();
@@ -20,6 +22,7 @@ app.use(cors());
 app.use(helmet());
 app.use(cookieParser());
 app.use(morgan("dev"));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 //CORD 
 app.use(
