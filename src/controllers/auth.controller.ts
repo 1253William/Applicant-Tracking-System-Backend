@@ -2,6 +2,7 @@ import {Request, Response} from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import UserModel, { User } from '../models/user.model'
+import { AuthRequest } from '../types/authRequest'
 require('dotenv').config();
 
 //JWT
@@ -155,6 +156,39 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     }
 }
 
+//@route POST /api/v1/auth/me
+//@desc Get Data/Profile/Details of Logged-in user
+//@access public
+export const userData = async (req: AuthRequest, res: Response, ): Promise<void> => {
+    try {
+
+        const userId = req.user?.userId;
+        if (!userId) {
+            res.status(401).json({success: false, message: "Unauthorized"})
+        }
+
+        const user = await UserModel.findById(userId).select('-password');
+        if (!user) {
+            res.status(404).json({
+                success: false,
+                message: "User not found"
+            });
+            return;
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "User data fetched successfully",
+            data: user
+        })
+
+       
+    } catch (error) {
+        console.log({ message: "Error fetching user data", error });
+        res.status(500).json({ success: false, error: "Internal Server Error" });
+        return;
+   }
+}
 
 // @route POST /api/auth/logout 
 // @description Logout User (Clear refresh token)
