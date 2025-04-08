@@ -118,7 +118,7 @@ router.post('/login', login);
 
 /**
  * @swagger
- * /api/auth/me:
+ * /api/v1/auth/me:
  *   get:
  *     tags:
  *       - Authentication
