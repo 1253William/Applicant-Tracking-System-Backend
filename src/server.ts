@@ -24,11 +24,18 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-//CORD 
+//CORS
+// app.use(
+//   cors({
+//     origin: ["http://localhost:5173", "http://localhost:5174", "exp://192.168.43.167:8081"],
+//     credentials: true, 
+//   })
+// );
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
-    credentials: true, 
+    origin: (_origin, callback) => callback(null, true),
+    credentials: true,
   })
 );
 
@@ -39,8 +46,13 @@ app.use("/api/v1", rootRouter);
 
 // app.use(rootRouter);
 
-const PORT = process.env.PORT || 5000;
+// const PORT = process.env.PORT || 5000;
+const PORT = parseInt(process.env.PORT as string, 10) || 5000;
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server is running at http://0.0.0.0:${PORT}`);
 });
