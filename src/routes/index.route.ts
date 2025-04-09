@@ -1,7 +1,7 @@
 import express from "express";
 import authRouter from "./auth.route";
 // import refreshRouter from "./refreshToken.route";
-// import userRouter from "./user.route";
+import candidateRouter from "./candidate.route";
 // import productRoutes from "./routes/products";
 
 const rootRouter = express.Router();
@@ -15,11 +15,8 @@ rootRouter.get("/health", (req, res) => {
 //authentication routes
 rootRouter.use('/auth',authRouter);
 
-//refresh token routes
-// rootRouter.use(refreshRouter);
-
-//user routes
-// rootRouter.use(userRouter);
+//candidates routes
+rootRouter.use(candidateRouter);
 
 
 
