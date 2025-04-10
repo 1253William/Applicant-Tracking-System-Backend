@@ -36,8 +36,44 @@ export const getAllCandidates = async ( req: AuthRequest, res: Response): Promis
         })
 
     } catch (error: unknown) {
-        console.log({message: "Error signing up user", error: error});
+        console.log({message: "Error fetching all candidates", error: error});
         res.status(500).json({ success: false, error: "Internal Server Error" });
-        return 
+        return;
     }
- }
+}
+ 
+
+// @route GET /api/v1/candidates/:id
+// @description Fetch/View applicants profile by id
+// @access Private
+export const getCandidate = async(req: AuthRequest, res: Response): Promise<void> => {
+    try {
+        const { id } = req.params;
+        if (!id) {
+            res.status(400).json({
+                success: false,
+                message: "Invalid or Null candidate ID provided"
+            })
+        }
+
+        const candidate = await UserModel.findById(id );
+        if (!candidate) {
+            res.status(404).json({
+                success: false,
+                message: "Candidate not found"
+            })
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Candidate profile fetched successfully",
+            data: candidate
+        });
+        return;
+        
+    } catch (error: unknown) {
+        console.log({ message: "Error fetching candidate profile", error });
+        res.status(500).json({ success: false, error: "Internal Server Error" });
+        return;
+    }
+}

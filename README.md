@@ -35,7 +35,7 @@ GET	   /api/v1/auth/me	Get logged-in user(user details)
 ** Candidate/Applicant/Users Management
 Method	Endpoint	Description
 GET  /api/v1/candidates   Fetch all Applicants/candidates for  recruiter
-GET  /api/v1/candidates/:id Fetch/View an applicant details
+GET  /api/v1/candidates/:id Fetch/View an applicant details by id
 PUT  /api/v1/candidates/:id  Toggle applicant status as either 'opened' / 'closed' 
 DELETE /api/v1/candidates/:id   Delete a candidate application/details from db
 
