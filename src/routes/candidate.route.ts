@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import { getAllCandidates, getCandidate } from "../controllers/candidates.controller";
+import { deleteCandidate, getAllCandidates, getCandidate } from "../controllers/candidates.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { authorizedRoles } from "../middlewares/roles.middleware";
 
@@ -160,5 +160,84 @@ router.get('/candidates', authMiddleware, authorizedRoles("Recruiter"), getAllCa
 //@access Private
 router.get('/candidates/:id',authMiddleware, authorizedRoles("Recruiter"), getCandidate);
 
+/**
+ * @swagger
+ * /api/v1/candidates/{id}:
+ *   delete:
+ *     tags:
+ *       - Candidates
+ *     summary: Delete applicant's profile by ID
+ *     description: Permanently deletes a candidate's profile from the system using their unique ID.
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The ID of the candidate to delete
+ *         schema:
+ *           type: string
+ *           example: "6616b45ee07136b0fe5404dc"
+ *     responses:
+ *       200:
+ *         description: Candidate profile deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Candidate profile deleted successfully
+ *                 data:
+ *                   type: object
+ *                   description: The deleted candidate object
+ *       400:
+ *         description: Invalid or null candidate ID provided
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: Invalid or Null candidate ID provided
+ *       404:
+ *         description: Candidate not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: Candidate not found
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 error:
+ *                   type: string
+ *                   example: Internal Server Error
+ */
+//@route DELETE /api/v1/candidates/:id
+//@desc Delete candidate profile/details by id
+//@access Private
+router.delete('/candidates/:id', authMiddleware, authorizedRoles("Recruiter"), deleteCandidate);
 
 export default router;

@@ -77,3 +77,39 @@ export const getCandidate = async(req: AuthRequest, res: Response): Promise<void
         return;
     }
 }
+
+// @route DELETE /api/v1/candidates/:id
+// @description Delete applicant's profile by id
+// @access Private
+export const deleteCandidate = async (req: AuthRequest, res: Response): Promise<void> =>{
+    try {
+        const { id } = req.params
+          if (!id) {
+            res.status(400).json({
+                success: false,
+                message: "Invalid or Null candidate ID provided"
+            })
+          }
+        
+        const deletedCandidate = await UserModel.findByIdAndDelete(id );
+        if (!deletedCandidate) {
+            res.status(404).json({
+                success: false,
+                message: "Candidate not found"
+            });
+            return
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Candidate profile deleted successfully",
+            data: deletedCandidate
+        });
+        return;
+        
+    } catch (error: unknown) {
+          console.log({ message: "Error deleting candidate profile", error });
+        res.status(500).json({ success: false, error: "Internal Server Error" });
+        return;
+    }
+}
