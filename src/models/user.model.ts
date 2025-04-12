@@ -7,6 +7,7 @@ export type User = Document & {
     role: 'Recruiter' | 'Applicant';
     companyName?: string;
     companyEmail?: string;
+    applicationJourney: mongoose.Types.ObjectId;
     isAccountDeleted?: boolean;
     createdAt?: Date;
     updatedAt?: Date;
@@ -30,7 +31,7 @@ const UserSchema: Schema<User> = new Schema(
             type: String,
             required: true,
             minlength: [6, 'Password must be at least 6 characters long'],
-            select: false, 
+            select: false,
         },
         role: {
             type: String,
@@ -46,6 +47,10 @@ const UserSchema: Schema<User> = new Schema(
             trim: true,
             lowercase: true,
             match: [/.+@.+\..+/, 'Please enter a valid company email address'],
+        },
+        applicationJourney: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'applicationJourney'
         },
         isAccountDeleted: {
             type: Boolean,

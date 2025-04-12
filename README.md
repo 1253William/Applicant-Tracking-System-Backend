@@ -41,11 +41,11 @@ DELETE /api/v1/candidates/:id   Delete a candidate application/details from db
 
 **Job Management
 Method	Endpoint	Description
-POST	/api/jobs	Create a new job
-GET	/api/jobs	Get all jobs
-GET	/api/jobs/:id	Get single job
-PATCH	/api/jobs/:id	Update job
-DELETE	/api/jobs/:id	Delete job
+POST	/api/v1/jobs	Create a new job
+GET	/api/v1/jobs	Get all jobs
+GET	/api/v1/jobs/:id	Get single job
+PATCH	/api/v1/jobs/:id	Update job
+DELETE	/api/v1/jobs/:id	Delete job
 
 **Statistics/Metrics for Dashboard Overview
 Method	Endpoint	Description
@@ -59,6 +59,7 @@ GET  /////// Monthly trend
 **Candidate Tracking Management (candidate routes with Multer for resume upload)
 **Resume Parsing Management
 
+Candidate (track each user per application stage, Toggle applicant status ) -> Job Role (Job title, Department, Candidates(UserId), status(open/closed) type(fulltime/part-time) Application stages, we should find: total candidates, in-pipeline, hired, rejected)
 
 
 

@@ -13,7 +13,7 @@ export const authorizedRoles = (...roles: string[]) => {
         if (!req.user) {
             res.status(401).json({
                 success: false,
-                message: "Unauthorized: No user role found. Access denied."
+                message: "Unauthorized: No user found. Please login"
             });
             return;
         }

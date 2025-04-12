@@ -125,7 +125,7 @@ router.get('/candidates', authMiddleware, authorizedRoles("Recruiter"), getAllCa
  *                       example: "jane@example.com"
  *                     role:
  *                       type: string
- *                       example: "Candidate"
+ *                       example: "Applicant"
  *       400:
  *         description: Invalid candidate ID format.
  *         content:
