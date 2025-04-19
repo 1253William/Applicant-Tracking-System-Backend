@@ -4,7 +4,7 @@ export type Job = Document & {
     title: string;
     description: string;
     department: string;
-    location: string;
+    location: 'onsite' | 'remote'| 'hybrid';
     status: 'opened' | 'closed';
     type: 'full-time' | 'part-time';
     applicationStages:  [{ type: String }], // e.g., ['Applied', 'Phone Screen', 'Interview', 'Offer', 'Hired']
@@ -25,6 +25,8 @@ const JobRoleSchema: Schema<Job> = new Schema({
     },
     location: {
         type: String,
+        enum: ['onsite', 'remote', 'hybrid'],
+        default: 'onsite',
         required: true
     },
     status: {

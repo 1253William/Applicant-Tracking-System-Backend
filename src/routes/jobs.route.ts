@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import { createJob, getJobs } from "../controllers/jobs.controllers";
+import { createJob, getJobs, getJob, filterJobs } from "../controllers/jobs.controllers";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { authorizedRoles } from "../middlewares/roles.middleware";
 
@@ -173,7 +173,7 @@ router.post('/jobs', authMiddleware, authorizedRoles("Recruiter"), createJob);
  *                         example: "full-time"
  *                       location:
  *                         type: string
- *                         example: "Remote"
+ *                         example: "Onsite"
  *                       applicationStages:
  *                         type: array
  *                         items:
@@ -208,9 +208,140 @@ router.post('/jobs', authMiddleware, authorizedRoles("Recruiter"), createJob);
 //@access Private
 router.get('/jobs', authMiddleware, authorizedRoles("Recruiter"), getJobs);
 
+/**
+ * @swagger
+ * /api/v1/jobs/filter:
+ *   get:
+ *     summary: Get all jobs with filtering and pagination
+ *     description: Admin can search and filter jobs by application stages/status, job role/title, location, and paginate results.
+ *     tags:
+ *       - Job Management
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: title
+ *         schema:
+ *           type: string
+ *         description: Filter by job title (role)
+ *       - in: query
+ *         name: status
+ *         schema:
+ *           type: string
+ *           enum: [open, closed]
+ *         description: Filter by job status
+ *       - in: query
+ *         name: stage
+ *         schema:
+ *           type: string
+ *         description: Filter by application stage (e.g. Interview)
+ *       - in: query
+ *         name: location
+ *         schema:
+ *           type: string
+ *           enum: [remote, onsite, hybrid]
+ *         description: Filter by location
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *         description: Page number for pagination
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           example: 10
+ *         description: Number of items per page
+ *     responses:
+ *       200:
+ *         description: Jobs fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Jobs fetched successfully
+ *                 total:
+ *                   type: integer
+ *                   example: 42
+ *                 page:
+ *                   type: integer
+ *                   example: 1
+ *                 totalPages:
+ *                   type: integer
+ *                   example: 5
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Job'
+ *       500:
+ *         description: Internal Server Error
+ */
+//@route GET /api/v1/jobs/filter
+// @desc    Get all jobs with filters and pagination (Admin)
+// @access  Private
+router.get('/jobs/filter', authMiddleware, authorizedRoles("Recruiter"), filterJobs);
+
+/**
+ * @swagger
+ * /api/v1/jobs/{id}:
+ *   get:
+ *     summary: Get a job by ID
+ *     description: Retrieves a single job post using its unique ID
+ *     tags:
+ *       - Job Management
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Job ID
+ *         schema:
+ *           type: string
+ *           example: 66218bdf263489ec7f94c71a
+ *     responses:
+ *       200:
+ *         description: Job fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Job fetched successfully
+ *                 data:
+ *                   $ref: '#/components/schemas/Job'
+ *       404:
+ *         description: Job not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: Job not found
+ *       500:
+ *         description: Internal Server Error
+ */
 //@route GET /api/v1/jobs/:id
 //@desc  Get a job to Admin
 //@access Private
+router.get('/jobs/:id', authMiddleware, authorizedRoles("Recruiter"), getJob);
 
 //@route PUT /api/v1/jobs/:id
 //@desc  Update a job by Admin
