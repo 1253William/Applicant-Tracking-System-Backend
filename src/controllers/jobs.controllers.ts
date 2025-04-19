@@ -11,7 +11,8 @@ export const createJob = async ( req: Request, res: Response): Promise<void> => 
              res.status(400).json({
                  success: false,
                  message: "All fields are required"
-             })
+             });
+             return;
          }
 
         const newJob = await JobModel.create({
@@ -26,10 +27,40 @@ export const createJob = async ( req: Request, res: Response): Promise<void> => 
             success: true,
             message: "Job created successfully",
             data: newJob
-        })
+        });
+         return;
 
     } catch (error: any) {
-        console.log({message: "Error creating new job post", error: error.message});
+        console.log({message: "Error creating new job post:", error: error.message});
+        res.status(500).json({ success: false, error: "Internal Server Error" });
+        return;
+    }
+}
+
+//@route GET /api/v1/jobs
+//@desc  Get all jobs (Admin)
+//@access Private
+export const getJobs = async(req: Request, res: Response): Promise<void> => {
+    try {
+        const jobs = await JobModel.find().sort({createdAt: -1});
+        if(!jobs || jobs.length === 0) {
+            res.status(404).json({
+                success: false,
+                message: "No jobs available at this time"
+            });
+            return;
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "All Jobs fetched successfully",
+            totalJobs: jobs.length,
+            data: jobs
+        });
+        return;
+
+    }catch (error: any) {
+        console.log({message: "Error fetching jobs:", error: error.message});
         res.status(500).json({ success: false, error: "Internal Server Error" });
         return;
     }

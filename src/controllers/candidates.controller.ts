@@ -33,10 +33,11 @@ export const getAllCandidates = async ( req: AuthRequest, res: Response): Promis
             success: true,
             message: "All candidates fetched successfully",
             data: candidates
-        })
+        });
+        return;
 
     } catch (error: unknown) {
-        console.log({message: "Error fetching all candidates", error: error});
+        console.log({message: "Error fetching all candidates:", error: error});
         res.status(500).json({ success: false, error: "Internal Server Error" });
         return;
     }
@@ -53,7 +54,8 @@ export const getCandidate = async(req: AuthRequest, res: Response): Promise<void
             res.status(400).json({
                 success: false,
                 message: "Invalid or Null candidate ID provided"
-            })
+            });
+            return;
         }
 
         const candidate = await UserModel.findById(id );
@@ -61,7 +63,8 @@ export const getCandidate = async(req: AuthRequest, res: Response): Promise<void
             res.status(404).json({
                 success: false,
                 message: "Candidate not found"
-            })
+            });
+            return
         }
 
         res.status(200).json({
@@ -72,7 +75,7 @@ export const getCandidate = async(req: AuthRequest, res: Response): Promise<void
         return;
         
     } catch (error: unknown) {
-        console.log({ message: "Error fetching candidate profile", error });
+        console.log({ message: "Error fetching candidate profile:", error });
         res.status(500).json({ success: false, error: "Internal Server Error" });
         return;
     }
@@ -88,7 +91,8 @@ export const deleteCandidate = async (req: AuthRequest, res: Response): Promise<
             res.status(400).json({
                 success: false,
                 message: "Invalid or Null candidate ID provided"
-            })
+            });
+            return
           }
         
         const deletedCandidate = await UserModel.findByIdAndDelete(id );
@@ -108,7 +112,7 @@ export const deleteCandidate = async (req: AuthRequest, res: Response): Promise<
         return;
         
     } catch (error: unknown) {
-          console.log({ message: "Error deleting candidate profile", error });
+          console.log({ message: "Error deleting candidate profile:", error });
         res.status(500).json({ success: false, error: "Internal Server Error" });
         return;
     }

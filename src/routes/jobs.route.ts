@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import { createJob } from "../controllers/jobs.controllers";
+import { createJob, getJobs } from "../controllers/jobs.controllers";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { authorizedRoles } from "../middlewares/roles.middleware";
 
@@ -126,9 +126,87 @@ import { authorizedRoles } from "../middlewares/roles.middleware";
 //@access Private
 router.post('/jobs', authMiddleware, authorizedRoles("Recruiter"), createJob);
 
+/**
+ * @swagger
+ * /api/v1/jobs:
+ *   get:
+ *     summary: Get all job listings
+ *     description: Admin can fetch all job listings with details including title, department, location, JobType(full-time/part-time), status(open/closed), and application stages.
+ *     tags:
+ *       - Job Management
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: All Jobs fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: All Jobs fetched successfully
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                         example: "661680f7700c580aa33f64e9"
+ *                       title:
+ *                         type: string
+ *                         example: "Product Designer"
+ *                       description:
+ *                         type: string
+ *                         example: "Design seamless UX/UI for web platforms."
+ *                       department:
+ *                         type: string
+ *                         example: "Design"
+ *                       type:
+ *                         type: string
+ *                         enum: [full-time, part-time]
+ *                         example: "full-time"
+ *                       location:
+ *                         type: string
+ *                         example: "Remote"
+ *                       applicationStages:
+ *                         type: array
+ *                         items:
+ *                           type: string
+ *                         example: ["Applied", "Screening", "Interview", "Offer"]
+ *                       status:
+ *                         type: string
+ *                         enum: [open, closed]
+ *                         example: "open"
+ *                       createdAt:
+ *                         type: string
+ *                         format: date-time
+ *                       updatedAt:
+ *                         type: string
+ *                         format: date-time
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 error:
+ *                   type: string
+ *                   example: Internal Server Error
+ */
 //@route GET /api/v1/jobs
 //@desc  Get all jobs to Admin
 //@access Private
+router.get('/jobs', authMiddleware, authorizedRoles("Recruiter"), getJobs);
 
 //@route GET /api/v1/jobs/:id
 //@desc  Get a job to Admin
