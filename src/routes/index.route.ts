@@ -2,7 +2,7 @@ import express from "express";
 import authRouter from "./auth.route";
 // import refreshRouter from "./refreshToken.route";
 import candidateRouter from "./candidate.route";
-// import productRoutes from "./routes/products";
+import jobRouter from "./jobs.route";
 
 const rootRouter = express.Router();
 
@@ -17,6 +17,9 @@ rootRouter.use('/auth',authRouter);
 
 //candidates routes
 rootRouter.use(candidateRouter);
+
+//jobs routes
+rootRouter.use(jobRouter)
 
 
 

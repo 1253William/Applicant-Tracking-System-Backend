@@ -46,6 +46,7 @@ GET	/api/v1/jobs	Get all jobs
 GET	/api/v1/jobs/:id	Get single job
 PATCH	/api/v1/jobs/:id	Update job
 DELETE	/api/v1/jobs/:id	Delete job
+POST    /api/v1/jobs/applications submit an application on the job portal/page and backend submits and parses resume and details to the db
 
 **Statistics/Metrics for Dashboard Overview
 Method	Endpoint	Description

@@ -2,7 +2,9 @@ import mongoose, { Schema, Document, Model } from "mongoose";
 
 export type Job = Document & {
     title: string;
+    description: string;
     department: string;
+    location: string;
     status: 'opened' | 'closed';
     type: 'full-time' | 'part-time';
     applicationStages:  [{ type: String }], // e.g., ['Applied', 'Phone Screen', 'Interview', 'Offer', 'Hired']
@@ -13,7 +15,15 @@ const JobRoleSchema: Schema<Job> = new Schema({
         type: String,
         required: true
     },
+    description: {
+        type: String,
+        required: true
+    },
     department: {
+        type: String,
+        required: true
+    },
+    location: {
         type: String,
         required: true
     },
