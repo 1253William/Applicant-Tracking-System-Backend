@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import { createJob, getJobs, getJob, filterJobs } from "../controllers/jobs.controllers";
+import {createJob, getJobs, getJob, filterJobs, updateJob} from "../controllers/jobs.controllers";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { authorizedRoles } from "../middlewares/roles.middleware";
 
@@ -343,9 +343,95 @@ router.get('/jobs/filter', authMiddleware, authorizedRoles("Recruiter"), filterJ
 //@access Private
 router.get('/jobs/:id', authMiddleware, authorizedRoles("Recruiter"), getJob);
 
+/**
+ * @swagger
+ * /api/v1/jobs/{id}:
+ *   put:
+ *     tags:
+ *       - Job Management
+ *     summary: Update a job posting
+ *     description: Allows admin to update an existing job by ID.
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: The ID of the job to update
+ *         schema:
+ *           type: string
+ *           example: "661658fcd78d8f7f6a3e3c4a"
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 example: "Frontend Developer"
+ *               description:
+ *                 type: string
+ *                 example: "We are looking for a skilled frontend developer..."
+ *               department:
+ *                 type: string
+ *                 example: "Engineering"
+ *               type:
+ *                 type: string
+ *                 enum: [full-time, part-time, contract]
+ *                 example: "full-time"
+ *               status:
+ *                 type: string
+ *                 enum: [open, closed]
+ *                 example: "open"
+ *               location:
+ *                 type: string
+ *                 enum: [remote, onsite, hybrid]
+ *                 example: "remote"
+ *     responses:
+ *       200:
+ *         description: Job updated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "Job updated successfully"
+ *                 data:
+ *                   $ref: '#/components/schemas/Job'
+ *       400:
+ *         description: Job ID is required or invalid input.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *       404:
+ *         description: Job not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Internal Server Error.
+ */
 //@route PUT /api/v1/jobs/:id
 //@desc  Update a job by Admin
 //@access Private
+router.put('/jobs/:id', authMiddleware, authorizedRoles("Recruiter"), updateJob);
 
 //@route DELETE /api/v1/jobs/:id
 //@desc  Delete a job by Admin

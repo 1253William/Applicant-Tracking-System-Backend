@@ -13,9 +13,9 @@ if (!ACCESS_TOKEN_SECRET) {
 }
 
 
-// @route POST /api/auth/signup
-// @description Sign Up User (Create User and Hashed Password)
-// @access Public
+//@route POST /api/auth/signup
+//@desc Sign Up User (Create User and Hash Password)
+//@access Public
 export const signup = async ( req: Request, res: Response): Promise<void> => {
     try {
         const { fullName, email, password, role, isAccountDeleted, companyName, companyEmail } = req.body;
@@ -90,9 +90,9 @@ export const signup = async ( req: Request, res: Response): Promise<void> => {
  }
 
 
-// @route POST /api/auth/login
-// @description Login User (JWT authentication with access token )
-// @access Public
+//@route POST /api/auth/login
+//@desc Login User (JWT authentication with access token )
+//@access Public
 export const login = async (req: Request, res: Response): Promise<void> => { 
     try {
         const { email, password } = req.body;
@@ -190,9 +190,9 @@ export const userData = async (req: AuthRequest, res: Response, ): Promise<void>
    }
 }
 
-// @route POST /api/auth/logout 
-// @description Logout User (Clear refresh token)
-// @access Public
+//@route POST /api/auth/logout
+//@desc Logout User (Clear refresh token)
+//@access Public
 export const logout = async (req: Request, res: Response): Promise<void> => {
     try {
         res.status(200).json({success:true, message: "User logged out successfully"})

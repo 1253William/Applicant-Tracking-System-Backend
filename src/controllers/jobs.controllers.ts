@@ -2,9 +2,9 @@ import { Request, Response } from 'express';
 import JobModel from '../models/jobRole.model';
 import {AuthRequest} from "../types/authRequest";
 
-// @route POST /api/v1/jobs
-// @desc Create a new job by Admin
-// @access Private
+//@route POST /api/v1/jobs
+//@desc Create a new job by Admin
+//@access Private
 export const createJob = async ( req: Request, res: Response): Promise<void> => {
     try {
          const { title, description, department, location, type} = req.body;
@@ -141,6 +141,49 @@ export  const filterJobs = async (req: AuthRequest, res: Response): Promise<void
     }catch (error: any) {
         console.log({message: "Error filtering jobs:", error: error.message});
         res.status(500).json({ success: false, error: "Internal Server Error" });
+        return;
+    }
+}
+
+//@route PUT /api/v1/jobs/:id
+//@desc    Update a job (Admin)
+//@access  Private
+export const updateJob = async(req: Request, res: Response): Promise<void> =>{
+    try{
+        const { id } = req.params;
+        const updateData = req.body;
+        if(!id) {
+            res.status(400).json({
+                success: false,
+                message: "Job ID is required"
+            });
+            return;
+        }
+        const existingJob = await JobModel.findById(id);
+        if(!existingJob){
+            res.status(404).json({
+                success: false,
+                message: "No job found with the provided ID"
+            });
+            return;
+        }
+
+        const updatedJob = await JobModel.findByIdAndUpdate(id, updateData, {
+            new: true,
+            runValidators: true
+        });
+
+        res.status(200).json({
+            success: true,
+            message: "Job updated successfully",
+            data: updatedJob
+        });
+        return;
+
+
+    }catch(error: any) {
+        console.log({message: "Error updating job:", error: error.message});
+        res.status(500).json({ success: false, error: "Interval Server Error"});
         return;
     }
 }

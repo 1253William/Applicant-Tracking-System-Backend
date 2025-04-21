@@ -195,4 +195,7 @@ router.post('/me', authMiddleware, authorizedRoles("Recruiter", "Applicant"), us
 //@access public
 router.post('/logout', authMiddleware, authorizedRoles("Recruiter"), logout)
 
+//Option for uploading profile photo
+//Add user profile icon/photo
+
 export default router;
