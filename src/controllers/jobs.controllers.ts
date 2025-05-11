@@ -39,7 +39,7 @@ export const createJob = async ( req: Request, res: Response): Promise<void> => 
 }
 
 //@route GET /api/v1/jobs
-//@desc  Get all jobs (Admin)
+//@desc Get all jobs (Admin)
 //@access Private
 export const getJobs = async(req: Request, res: Response): Promise<void> => {
     try {
@@ -67,9 +67,9 @@ export const getJobs = async(req: Request, res: Response): Promise<void> => {
     }
 }
 
-//@route   GET /api/v1/jobs/:id
-//@desc    Get a single job by ID
-//@access  Private
+//@route GET /api/v1/jobs/:id
+//@desc Get a single job by ID
+//@access Private
 export const getJob = async(req: Request, res: Response): Promise<void> => {
     try{
         const { id } = req.params;
@@ -97,8 +97,8 @@ export const getJob = async(req: Request, res: Response): Promise<void> => {
 }
 
 //@route GET /api/v1/jobs/filter
-//@desc    Get all jobs with filters and pagination (Admin)
-//@access  Private
+//@desc Get all jobs with filters and pagination (Admin)
+//@access Private
 export  const filterJobs = async (req: AuthRequest, res: Response): Promise<void> => {
     try{
         const { title, status, applicationStages, location, page=1, limit=10 } = req.query;
@@ -146,8 +146,8 @@ export  const filterJobs = async (req: AuthRequest, res: Response): Promise<void
 }
 
 //@route PUT /api/v1/jobs/:id
-//@desc    Update a job (Admin)
-//@access  Private
+//@desc Update a job (Admin)
+//@access Private
 export const updateJob = async(req: Request, res: Response): Promise<void> =>{
     try{
         const { id } = req.params;

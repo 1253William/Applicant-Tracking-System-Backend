@@ -45,7 +45,7 @@ export const getAllCandidates = async ( req: AuthRequest, res: Response): Promis
  
 
 // @route GET /api/v1/candidates/:id
-// @description Fetch/View applicants profile by id
+// @description Fetch/View applicant profile by id
 // @access Private
 export const getCandidate = async(req: AuthRequest, res: Response): Promise<void> => {
     try {

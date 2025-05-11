@@ -5,7 +5,7 @@ interface AuthRequest extends Request {
     user?: string | jwt.JwtPayload
 }
 
-export const authMiddleware = (req: Request, res: Response, next: NextFunction): void => {
+export const authMiddleware = (req: AuthRequest, res: Response, next: NextFunction): void => {
     try {
         const token = req.headers.authorization?.split(" ")[1];
 
@@ -27,7 +27,6 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction):
             }
 
             (req as any).user = user;
-            console.log(user);
 
             next();
         });

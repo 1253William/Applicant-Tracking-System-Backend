@@ -28,11 +28,11 @@ RydeSync ATS is an enterprise-grade Applicant Tracking System designed to help t
 ##  API Endpoints
 **Authentication
 Method	Endpoint	Description
-POST	/api/v1/auth/signup	Register new user
-POST	/api/v1/auth/login	User login
-GET	   /api/v1/auth/me	Get logged-in user(user details)
+POST /api/v1/auth/signup	Register new user
+POST /api/v1/auth/login	User login
+GET	/api/v1/auth/me	Get logged-in user(user details)
 
-** Candidate/Applicant/Users Management
+**Candidate/Applicant/Users Management
 Method	Endpoint	Description
 GET  /api/v1/candidates   Fetch all Applicants/candidates for  recruiter
 GET  /api/v1/candidates/:id Fetch/View an applicant details by id
@@ -41,20 +41,18 @@ DELETE /api/v1/candidates/:id   Delete a candidate application/details from db
 
 **Job Management
 Method	Endpoint	Description
-POST	/api/v1/jobs	Create a new job
+POST /api/v1/jobs	Create a new job
 GET	/api/v1/jobs	Get all jobs
-GET	/api/v1/jobs/:id	Get single job
-PATCH	/api/v1/jobs/:id	Update job
+GET	/api/v1/jobs/:id	Get a single job 
+PATCH /api/v1/jobs/:id	Update job
 DELETE	/api/v1/jobs/:id	Delete job
-POST    /api/v1/jobs/applications submit an application on the job portal/page and backend submits and parses resume and details to the db
+POST /api/v1/jobs/applications submit an application on the job portal/page and backend submits and parses resume and details to the db
 
 **Statistics/Metrics for Dashboard Overview
 Method	Endpoint	Description
-GET   /api/v1/dashboard/metrics  Fetch 1. total jobs, 2. Total Candidates, 3. Total Positions Filled, 4. Total Employment
-GET  ////// Weekly trend
-GET  /////// Monthly trend
-
-
+GET /api/v1/dashboard/metrics Fetch 1. total jobs, 2. Total Candidates, 3. Total Positions Filled, 4. Total Employment
+GET ////// Weekly trend
+GET /////// Monthly trend
 
 
 **Candidate Tracking Management (candidate routes with Multer for resume upload)

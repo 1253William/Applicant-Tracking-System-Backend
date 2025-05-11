@@ -204,7 +204,7 @@ router.post('/jobs', authMiddleware, authorizedRoles("Recruiter"), createJob);
  *                   example: Internal Server Error
  */
 //@route GET /api/v1/jobs
-//@desc  Get all jobs to Admin
+//@desc Get all jobs to Admin
 //@access Private
 router.get('/jobs', authMiddleware, authorizedRoles("Recruiter"), getJobs);
 
@@ -284,8 +284,8 @@ router.get('/jobs', authMiddleware, authorizedRoles("Recruiter"), getJobs);
  *         description: Internal Server Error
  */
 //@route GET /api/v1/jobs/filter
-// @desc    Get all jobs with filters and pagination (Admin)
-// @access  Private
+// @desc Get all jobs with filters and pagination (Admin)
+// @access Private
 router.get('/jobs/filter', authMiddleware, authorizedRoles("Recruiter"), filterJobs);
 
 /**
@@ -339,7 +339,7 @@ router.get('/jobs/filter', authMiddleware, authorizedRoles("Recruiter"), filterJ
  *         description: Internal Server Error
  */
 //@route GET /api/v1/jobs/:id
-//@desc  Get a job to Admin
+//@desc Get a job to Admin
 //@access Private
 router.get('/jobs/:id', authMiddleware, authorizedRoles("Recruiter"), getJob);
 
@@ -429,7 +429,7 @@ router.get('/jobs/:id', authMiddleware, authorizedRoles("Recruiter"), getJob);
  *         description: Internal Server Error.
  */
 //@route PUT /api/v1/jobs/:id
-//@desc  Update a job by Admin
+//@desc Update a job by Admin
 //@access Private
 router.put('/jobs/:id', authMiddleware, authorizedRoles("Recruiter"), updateJob);
 
@@ -442,7 +442,7 @@ router.put('/jobs/:id', authMiddleware, authorizedRoles("Recruiter"), updateJob)
 //@access Public
 
 //@route POST /api/v1/jobs/application
-//@desc  Submit a job application on the job portal
+//@desc Submit a job application on the job portal
 //@access Public
 
 export default router;
